@@ -3,8 +3,6 @@ package com.feng.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @Author: Administrator
@@ -13,6 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @Controller
 public class UserController {
+
+    @RequestMapping("/login")
+    public String login() {
+        System.out.println("来到了登录页面");
+        return "login";
+    }
 
     @RequestMapping("/hello")
     public String testHello() {
@@ -25,5 +29,11 @@ public class UserController {
         model.addAttribute("uid","123456789");
         model.addAttribute("name","Jerry");
         return "test";
+    }
+
+    @RequestMapping("/detail")
+    public String detail(){
+        System.out.println("来到了detail页面！");
+        return "detail";
     }
 }

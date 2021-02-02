@@ -5,6 +5,8 @@ import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * author: zzf
@@ -13,12 +15,19 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ShiroConfig {
 
+    @Bean
     public ShiroFilterFactoryBean getShiroFilterFactoryBean(@Qualifier("securityManager")DefaultWebSecurityManager securityManager) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         //设置安全管理器
         shiroFilterFactoryBean.setSecurityManager(securityManager);
+        Map<String, String> map = new HashMap<String, String>();
+        //对所有用户认证
+        map.put("/**", "authc");
+        shiroFilterFactoryBean.setLoginUrl("/login");
+        shiroFilterFactoryBean.setFilterChainDefinitionMap(map);
         return shiroFilterFactoryBean;
     }
+
     /**
      * 创建DefaultWebSecurityManager
      */
@@ -29,6 +38,7 @@ public class ShiroConfig {
         securityManager.setRealm(userRealm);
         return securityManager;
     }
+
     /**
      * 创建Realm
      */
